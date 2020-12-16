@@ -8,6 +8,11 @@ export class Email {
     if (local.length > 64 || domain.length > 255) {
       return false
     }
+
+    if (!local.length) {
+      return false
+    }
+
     return true
   }
 }
