@@ -1,6 +1,6 @@
 export class Email {
   static validate (email: string): boolean {
-    if (!email) {
+    if (!email || email.length > 320) {
       return false
     }
 
