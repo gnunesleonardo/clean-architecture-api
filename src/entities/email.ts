@@ -9,7 +9,7 @@ export class Email {
       return false
     }
 
-    if (!local.length) {
+    if (!local.length || !domain.length) {
       return false
     }
 
