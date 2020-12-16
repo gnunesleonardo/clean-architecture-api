@@ -4,6 +4,11 @@ export class Email {
       return false
     }
 
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (!emailRegex.test(email)) {
+      return false
+    }
+
     const [local, domain] = email.split('@')
     if (local.length > 64 || domain.length > 255) {
       return false
