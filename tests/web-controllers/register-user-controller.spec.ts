@@ -57,4 +57,50 @@ describe('Register user web controller', () => {
     expect(response.statusCode).toEqual(400)
     expect(response.body).toBeInstanceOf(InvalidEmailError)
   })
+
+  test('should return status code 400 when request is missing name', async () => {
+    const requestWithInvalidBody: HttpRequest = {
+      body: {
+        email: 'any_mail.com'
+      }
+    }
+
+    const users: UserData[] = []
+    const repo: UserRepository = new InMemoryUserRepository(users)
+    const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(repo)
+    const controller: RegisterUserController = new RegisterUserController(usecase)
+    const response: HttpResponse = await controller.handle(requestWithInvalidBody)
+    expect(response.statusCode).toEqual(400)
+    expect((response.body as Error).message).toEqual('Missing parameter from request: name.')
+  })
+
+  test('should return status code 400 when request is missing email', async () => {
+    const requestWithInvalidBody: HttpRequest = {
+      body: {
+        name: 'Any name'
+      }
+    }
+
+    const users: UserData[] = []
+    const repo: UserRepository = new InMemoryUserRepository(users)
+    const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(repo)
+    const controller: RegisterUserController = new RegisterUserController(usecase)
+    const response: HttpResponse = await controller.handle(requestWithInvalidBody)
+    expect(response.statusCode).toEqual(400)
+    expect((response.body as Error).message).toEqual('Missing parameter from request: email.')
+  })
+
+  test('should return status code 400 when request is missing name and email', async () => {
+    const requestWithInvalidBody: HttpRequest = {
+      body: {}
+    }
+
+    const users: UserData[] = []
+    const repo: UserRepository = new InMemoryUserRepository(users)
+    const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(repo)
+    const controller: RegisterUserController = new RegisterUserController(usecase)
+    const response: HttpResponse = await controller.handle(requestWithInvalidBody)
+    expect(response.statusCode).toEqual(400)
+    expect((response.body as Error).message).toEqual('Missing parameter from request: name and email.')
+  })
 })
