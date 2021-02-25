@@ -42,5 +42,10 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongodb": "^3.6.4"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "debug": "0"
+    }
   }
 }
